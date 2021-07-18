@@ -1,0 +1,3 @@
+services:
+    socnet.antispam:
+        class:  OCPlatformBundle\Antispam\OCAntispam

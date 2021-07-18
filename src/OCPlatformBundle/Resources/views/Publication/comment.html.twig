@@ -1,0 +1,26 @@
+<div class="well">
+	<div class="form_error"></div>
+	{{ form_start(form, {'attr': {'class': 'form-horizontal ajaxForm'}}) }}
+	{{ form_errors(form) }}
+
+	 <div class="form-group">
+      {# {{ form_label(form.textcomment, "commentaire", {'label_attr': {'class': 'control-label col-sm-2'}}) }} #}
+      {{ form_errors(form.textcomment) }}
+      <div class="control-label col-sm-2" > <img class="img-thumbnail" src="{{ app.user.image.url }}"  alt="..."  style="max-height: 80px; max-width: 80px;"></div>
+      <div class="col-sm-10">
+        {{ form_widget(form.textcomment, {'attr': {'class': 'form-control', 'rows': 4 }}) }}
+      </div>
+    </div>
+
+    <div class="form-group"> 
+  		<div class="col-sm-offset-2 col-sm-10">
+  			{{ form_widget(form.Ajouter, {'attr': {'class': 'btn btn-primary'}}) }}
+  		</div>
+	</div>
+
+	{{ form_rest(form) }}
+
+	{{ form_end(form) }}
+
+</div>
+

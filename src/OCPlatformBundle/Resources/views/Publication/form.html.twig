@@ -1,0 +1,134 @@
+<h3>Formulaire d'annonce</h3>
+<div class="well" >
+	{{ form_start(form, { 'attr' : { 'class' : 'form-horizontal' } } ) }}
+
+		{{ form_errors(form) }}
+
+		<div class="form-group" >
+			{{ form_label(form.title, "Titre de l'annonce", { 'label_attr' : { 'class' : 'col-sm-3 control-label' } } ) }}
+
+			{{ form_errors(form.title) }}			
+
+			<div class="col-sm-4"> 
+				{{ form_widget(form.title, { 'attr' : { 'class' : 'form-control' } } ) }}				
+			</div>
+		</div>
+
+
+		<div class="form-group" >
+			{{ form_label(form.content, "Contenu de l'annonce", { 'label_attr' : { 'class' : 'col-sm-3 control-label' } } ) }}
+
+			{{ form_errors(form.content) }}			
+
+			<div class="col-sm-4"> 
+				{{ form_widget(form.content, { 'attr' : { 'class' : 'form-control' } } ) }}				
+			</div>
+		</div>
+
+		{% if form.date is defined %}
+		<div class="form-group" >
+			{{ form_label(form.date, "Date", { 'label_attr' : { 'class' : 'col-sm-3 control-label' } } ) }}
+
+			{{ form_errors(form.date) }}			
+
+			<div class="col-sm-4" > 
+				{{ form_widget(form.date, { 'attr' : { 'class' : 'form-control' } } ) }}				
+			</div>
+		</div>
+		{% endif %}
+
+		<div class="form-group" >
+			{{ form_label(form.author, "Autheur", { 'label_attr' : { 'class' : 'col-sm-3 control-label' } } ) }}
+
+			{{ form_errors(form.author) }}			
+
+			<div class="col-sm-4"> 
+				{{ form_widget(form.author, { 'attr' : { 'class' : 'form-control' } } ) }}				
+			</div>
+		</div>
+
+		{% if form.date is defined %}
+		<div class="form-group" >
+			{{ form_label(form.published, "Publier", { 'label_attr' : { 'class' : 'col-sm-3 control-label' } } ) }}
+
+			{{ form_errors(form.published) }}			
+
+			<div class="col-sm-4"> 
+				{{ form_widget(form.published, { 'attr' : { 'class' : 'form-control' } } ) }}				
+			</div>
+		</div>
+		{% endif %}
+
+		{{ form_row(form.image) }}
+
+		{{ form_row(form.categories) }}
+
+		{{ form_widget(form.save, { 'attr' : { 'class' : 'btn btn-primary' } } ) }}
+
+		{{ form_rest(form) }}
+
+
+	{{ form_end(form) }}
+
+</div>
+
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" ></script>
+
+<script type="text/javascript">
+	$(document).ready( function(){
+
+		var $container = $('div#ocplatformbundle_advert_categories');
+
+		var $addLink = $('<a  href="#" id="add_category"  class="btn btn-default"  >Ajouter une catégorie</a>');
+
+		$container.append($addLink);
+
+		$addLink.click( function(e){
+
+			addCategory($container); 
+			e.preventDefault();
+			return false;
+
+		});
+
+		var index = $container.find(':input').length;
+
+		if (index==0) {
+			addCategory($container);
+		} else{
+			$container.children('div').each( function(){
+						addDeleteLink($(this));	 
+			});
+		}
+
+		function addCategory($container) {
+			
+			$prototype = $($container.attr('data-prototype').replace( /__name__label__/g, 'Catégorie n°' + (index + 1 )  )
+							.replace( /__name__/g, index )); 
+			addDeleteLink($prototype);
+
+			$container.append($prototype);
+
+			index++;
+		}
+
+		function addDeleteLink($prototype) {
+			
+
+		$deleteLink = $('<a  href="#"  class="btn btn-danger"  >Supprimer</a>');
+
+		$prototype.append($deleteLink);
+
+		$deleteLink.click( function(e){
+
+			$prototype.remove();
+			e.preventDefault();
+			return false;
+
+		});
+
+		}
+
+		});
+	
+</script>

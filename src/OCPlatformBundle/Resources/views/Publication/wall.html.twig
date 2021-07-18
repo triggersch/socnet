@@ -1,0 +1,77 @@
+{% extends "PlatformBundle::layout.html.twig" %}
+
+{% block title %}
+  Journal - {{ parent() }}
+{% endblock %}
+
+{% block platform_body %}
+
+ <h2>Votre Journal</h2>
+
+ {% for publication in listPublications %}
+
+ 		 	<ul class="list-group" >
+		<li class="list-group-item">
+    		<div class="row">
+       			 <div class="col-sm-12 col-md-6 col-lg-4">
+           			 <img  class="img-thumbnail"  src="{{ publication.image.url }}" alt="..."/>  <!-- http://placehold.it/242x200 -->
+        		</div>
+
+        		<div class="col-sm-12 col-md-6 col-lg-8">
+            		<div class="caption">
+            			<div class="row">
+            				<div class="col-sm-12 col-md-6 col-lg-2" >
+            					<img class="img-thumbnail" src="{{ publication.author.image.url }}"  alt="..."  style="max-height: 80px; max-width: 80px;">
+            				</div>
+            				<div class="col-sm-12 col-md-6 col-lg-10"  >  
+            					<p>
+            					 <a href="{{ path('user_view', {'id': publication.author.id }) }}">
+            					          {{publication.author.firstname}} {{publication.author.lastname}} 
+            					  </a>
+            					</p>
+            					<p><small><i>Publié le {{ publication.date|date('d/m/Y H:i:s') }}</i></small></p>
+
+            				  </div>
+            			</div>
+             			 <h3><a href="{{ path('publication_view', {'id': publication.id})  }}"> 
+          				{{ publication.title }}
+        				</a></h3>
+                  {% if publication.origin %}
+                  <p>
+                    <a href="{{ path('publication_view', {'id': publication.origin.id}) }}"> {{ publication.origin.title }}
+                    </a>
+                  </p>
+                  {% endif %}
+            			 <p>{{publication.content}}
+        				</p>
+                  <p>
+                    <a href="#" class="btn btn-primary" role="button">Commenter</a> 
+                    <a href="{{ path( 'publication_share', {'id' : publication.id } ) }}" class="btn btn-default" role="button">Partager</a>
+                    <a href="{{ path('user_like', {'id': publication.id}) }}" class="btn btn-default" title="J'aime" id="like" >
+                    <i class="glyphicon glyphicon-thumbs-up"></i> 
+                    <span id="likes" class="badge">{{publication.likes}}</span></button> </a>  
+                    
+                  </p>
+
+           			</div>
+    			</div>
+
+			</div>
+		</li>
+	 </ul>
+
+
+ {% else %}
+     <p>Pas (encore !) de publication</p>
+ {% endfor %}
+
+  <ul class="pagination">
+            {% for p in range(1,nbPages) %}
+              <li {% if p == page  %} class="active" {% endif %} >
+                <a href="{{ path('platform_wall', {'page': p }) }}"> {{p}} </a> 
+              </li>
+            {% endfor  %}   
+  	</ul> 
+
+
+{% endblock %}
